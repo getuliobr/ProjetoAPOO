@@ -1,2 +1,2 @@
 # Clínica Veterinária
-Esse repositório é referente ao trabalho de Atividades de Análise e Projeto Orientado a Objetos - BCC33D 
+Este repositório é referente ao trabalho de de Análise e Projeto Orientado a Objetos - BCC33D, foi desenvolvido pelo [Getúlio](https://github.com/getuliobr/) e pelo [Igor](https://github.com/Nuisigor/)
