@@ -3,7 +3,9 @@ from uuid import uuid4
 
 class Cliente:
     
-    def __init__(self, nome, endereco, cidade, estado, telefone, documento, email, codigo = str(uuid4())):
+    def __init__(self, nome, endereco, cidade, estado, telefone, documento, email, codigo = None):
+        if not codigo:
+            codigo = str(uuid4())
         self.codigo = codigo
         self.nome = nome
         self.endereco = endereco
