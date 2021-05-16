@@ -1,12 +1,20 @@
-from src.sys.cliente import Cliente, Animal, Especie, Raca
-from src.dao.DAOCliente import ClienteDAO, AnimalDAO, EspecieDAO, RacaDAO
-from src.db import db
 from random import randint
 from time import sleep
 import math
 
+from src.db import db
+
+from src.sys.pagamento import Pagamento
+from src.sys.produto import CategoriaDeProduto
+from src.sys.cliente import Cliente, Animal, Especie, Raca
+
+from src.dao.DAOProduto import CategoriaDeProdutoDAO
+from src.dao.DAOCliente import ClienteDAO, AnimalDAO, EspecieDAO, RacaDAO
+from src.dao.DAOPagamento import PagamentoDAO
+
 db.build()
 
+'''
 ClienteDAO = ClienteDAO()
 EspecieDAO = EspecieDAO()
 RacaDAO = RacaDAO()
@@ -66,3 +74,40 @@ for i in range(100):
   AnimalDAO.add(a)
 
 print(AnimalDAO.getAll())
+'''
+
+'''
+PagamentoDAO = PagamentoDAO()
+cartao = Pagamento('cartao')
+cheque = Pagamento('cheque')
+dinheiro = Pagamento('dinheiro')
+valePresente = Pagamento('vale presente')
+
+PagamentoDAO.add(cartao)
+PagamentoDAO.add(cheque)
+PagamentoDAO.add(dinheiro)
+PagamentoDAO.add(valePresente)
+pagamentos = PagamentoDAO.getAll()
+
+print(pagamentos)
+print(pagamentos[0].read())
+print(PagamentoDAO.getByType('cartao').read())
+'''
+
+'''
+CategoriaDeProdutoDAO = CategoriaDeProdutoDAO()
+
+racao = CategoriaDeProduto('ração')
+remedio = CategoriaDeProduto('remedio')
+brinquedo = CategoriaDeProduto('brinquedo')
+
+CategoriaDeProdutoDAO.add(racao)
+CategoriaDeProdutoDAO.add(remedio)
+CategoriaDeProdutoDAO.add(brinquedo)
+
+print(len(CategoriaDeProdutoDAO.getAll()))
+
+print(CategoriaDeProdutoDAO.getByName('remedio')[0].read())
+
+print(CategoriaDeProdutoDAO.getByID('249296a1-4429-4c38-a088-bc56099f1e31').read())
+'''

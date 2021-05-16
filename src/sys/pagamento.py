@@ -4,4 +4,4 @@ class Pagamento:
         self.tipo = tipo
 
     def read(self):
-        return (self.tipo)
+        return (self.tipo,)

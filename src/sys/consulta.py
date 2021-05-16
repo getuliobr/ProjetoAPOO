@@ -1,4 +1,4 @@
-from sys.produto import Produto
+from src.sys.produto import Produto
 from uuid import uuid4
 
 class Consulta:

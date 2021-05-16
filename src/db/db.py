@@ -62,7 +62,6 @@ def execute(command, *values):
 	valueTuple = []
 	for value in values:
 		valueTuple.extend(value)
-
 	cur.execute(command, tuple(valueTuple))
 
 
