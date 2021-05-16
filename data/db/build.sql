@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS Animal(
     Nome varchar(40),
     Dono integer NOT NULL,
     DataNascimento date,
-    Especie INTEGER NOT NULL,
-    Raca INTEGER NOT NULL,
+    Especie UUID NOT NULL,
+    Raca UUID NOT NULL,
     Sexo char(1),
     Cor varchar(10),
     FOREIGN KEY (Dono) REFERENCES Cliente(Codigo),
@@ -64,8 +64,8 @@ CREATE TABLE IF NOT EXISTS Produto(
     Codigo UUID PRIMARY KEY,
     Descricao varchar(50),
     Fabricante varchar(50),
-    Categoria INTEGER,
-    preco float,
+    Categoria UUID,
+    Preco float,
     FOREIGN KEY (Categoria) REFERENCES CategoriaDeProduto(Codigo)
 );
 
@@ -78,11 +78,11 @@ CREATE TABLE IF NOT EXISTS Servicos(
 CREATE TABLE IF NOT EXISTS Consulta(
     IDConsulta UUID PRIMARY KEY,
     DataConsulta date,
-    Dono INTEGER NOT NULL,
-    Animal INTEGER NOT NULL,
-    Veterinario INTEGER,
+    Dono UUID NOT NULL,
+    Animal UUID NOT NULL,
+    Veterinario UUID,
     Pagamento varchar(25) NOT NULL,
-    Servicos INTEGER,
+    Servicos UUID,
     FOREIGN KEY (Dono) REFERENCES Cliente(Codigo),
     FOREIGN KEY (Animal) REFERENCES Animal(Codigo),
     FOREIGN KEY (Veterinario) REFERENCES Veterinario(Codigo),
@@ -91,8 +91,8 @@ CREATE TABLE IF NOT EXISTS Consulta(
 );
 
 CREATE TABLE IF NOT EXISTS Consulta_Medicamentos(
-    IDConsulta INTEGER,
-    IDProduto INTEGER,
+    IDConsulta UUID,
+    IDProduto UUID,
     FOREIGN KEY (IDConsulta) REFERENCES Consulta(IDConsulta),
     FOREIGN KEY (IDProduto) REFERENCES Produto(Codigo),
     CONSTRAINT Consulta_Medicamentos PRIMARY KEY (IDConsulta, IDProduto)
@@ -103,8 +103,8 @@ CREATE TABLE IF NOT EXISTS CarrinhoDeProdutos(
 );
 
 CREATE TABLE IF NOT EXISTS Carrinho_Produtos(
-    IDCarrinho INTEGER,
-    IDProduto INTEGER,
+    IDCarrinho UUID,
+    IDProduto UUID,
     FOREIGN KEY (IDCarrinho) REFERENCES CarrinhoDeProdutos(IDCarrinho),
     FOREIGN KEY (IDProduto)  REFERENCES Produto(Codigo),
     CONSTRAINT Carrinho_Produtos PRIMARY KEY (IDCarrinho, IDProduto)
@@ -112,9 +112,9 @@ CREATE TABLE IF NOT EXISTS Carrinho_Produtos(
 
 CREATE TABLE IF NOT EXISTS Venda(
     IDVenda UUID PRIMARY KEY,
-    Cliente INTEGER,
+    Cliente UUID,
     DataVenda date,
-    CarrinhoDeProdutos INTEGER,
+    CarrinhoDeProdutos UUID,
     Pagamento varchar(25),
     Preco float,
     FOREIGN KEY (Cliente) REFERENCES Cliente(Codigo),
@@ -128,8 +128,8 @@ CREATE TABLE IF NOT EXISTS Relatorio(
 );
 
 CREATE TABLE IF NOT EXISTS Relatorio_Geral(
-    IDRelatorio INTEGER,
-    IDTipo INTEGER,
+    IDRelatorio UUID,
+    IDTipo UUID,
     FOREIGN KEY (IDRelatorio) REFERENCES Relatorio(Relatorio)
     CONSTRAINT Relatorio_Geral PRIMARY KEY (IDRelatorio, IDTipo)
 );

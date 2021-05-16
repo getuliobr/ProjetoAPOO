@@ -78,7 +78,7 @@ class ProdutoDAO(DAO):
     def update(self, Produto):
         lista = self.__parsedList(Produto)
 
-        db.execute(f'UPDATE Produto SET Descricao = {lista[1]}, Fabricante = {lista[2]}, Categoria = {lista[3]}, preco = {lista[4]} WHERE Codigo = {lista[0]}')
+        db.execute(f'UPDATE Produto SET Descricao = {lista[1]}, Fabricante = {lista[2]}, Categoria = {lista[3]}, Preco = {lista[4]} WHERE Codigo = {lista[0]}')
         db.commit()
 
     def getByID(self, ID):
