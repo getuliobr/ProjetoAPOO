@@ -48,7 +48,8 @@ class CategoriaDeProdutoDAO(DAO):
 class ProdutoDAO(DAO):
 
     def __parseDataToObject(self, data):
-        categoria = CategoriaDeProdutoDAO.getByID(data[3])
+        data = list(data)
+        categoria = self.__CategoriaDeProdutoDAO.getByID(data[3])
         data[3] = categoria
 
         return Produto(
@@ -60,14 +61,15 @@ class ProdutoDAO(DAO):
         )
 
     def __parsedList(self, Produto):
-        lista = Produto.read()
+        lista = list(Produto.read())
         categoriaID = (lista[3].read())[0]
         lista[3] = categoriaID
         
-        return lista
+        return tuple(lista)
 
-    def __init__(self):
+    def __init__(self, CategoriaDeProdutoDAO):
         super().__init__('Produto', 'Codigo')
+        self.__CategoriaDeProdutoDAO = CategoriaDeProdutoDAO
     
     def add(self, Produto):
         lista  = self.__parsedList(Produto)
