@@ -5,3 +5,4 @@ a = ClienteDAO()
 b = Cliente(None, 'teste', 'rua de teste', 'cidade teste', 'teste', 22033445566, 23456789101, 'email@teste.com')
 
 print(a.add(b))
+print(a.getAll())

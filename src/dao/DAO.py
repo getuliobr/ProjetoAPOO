@@ -19,3 +19,6 @@ class DAO:
 
     db.execute(f'DELETE FROM {self.__name} WHERE {self.__pkName} = ?', ID)
     db.commit()
+
+  def getAll(self):
+    return self.select()
