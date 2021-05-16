@@ -138,6 +138,7 @@ class EspecieDAO(DAO):
         return parsedEspecie
 
 class AnimalDAO(DAO):
+    
     def __parseDataToObject(self, data):
         dono = ClienteDAO.getByID(data[2])
         data[2] = dono
@@ -145,7 +146,7 @@ class AnimalDAO(DAO):
         data[4] = especie
         raca = RacaDAO.getByID(data[5])
         data[5] = raca
-        
+
         return Animal(
             codigo= data[0],
             nome= data[1],
