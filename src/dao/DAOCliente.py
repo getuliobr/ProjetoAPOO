@@ -1,17 +1,16 @@
-from . import DAO
-from ..db import db
-from ..sys import cliente
+from src.dao.DAO import DAO
+from src.db import db
+from src.sys.cliente import Cliente
 
 class ClienteDAO(DAO):
 
     def __init__(self):
 
-        super.__init__('Cliente', 'Codigo')
+        super().__init__('Cliente', 'Codigo')
     
     def add(self, Cliente):
         lista  = Cliente.read()
-
-        db.execute(f'INSERT INTO Cliente(?,?,?,?,?,?,?,?)', lista)
+        db.execute(f'INSERT INTO Cliente VALUES (?,?,?,?,?,?,?,?)', lista)
         db.commit()
     
     def update(self, Cliente):

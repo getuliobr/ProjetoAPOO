@@ -16,7 +16,6 @@ def with_commit(func):
 
 	return inner
 
-
 @with_commit
 def build():
 	if isfile(BUILD_PATH):
@@ -57,7 +56,11 @@ def column(command, *values):
 
 
 def execute(command, *values):
-	cur.execute(command, tuple(values))
+	valueTuple = []
+	for value in values:
+		valueTuple.extend(value)
+
+	cur.execute(command, tuple(valueTuple))
 
 
 def multiexec(command, valueset):
