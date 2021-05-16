@@ -1,7 +1,9 @@
+from uuid import uuid4
+
 
 class Cliente:
     
-    def __init__(self, codigo, nome, endereco, cidade, estado, telefone, documento, email):
+    def __init__(self, nome, endereco, cidade, estado, telefone, documento, email, codigo = str(uuid4())):
         self.codigo = codigo
         self.nome = nome
         self.endereco = endereco
@@ -11,9 +13,7 @@ class Cliente:
         self.documento = documento
         self.email = email
 
-    def update(self, codigo= False , nome= False, endereco= False, cidade= False, estado= False, telefone= False, documento= False, email= False):
-        if(codigo):
-            self.codigo = codigo
+    def update(self, nome= False, endereco= False, cidade= False, estado= False, telefone= False, documento= False, email= False):
         if(nome):
             self.nome = nome
         if(endereco):

@@ -11,7 +11,7 @@ class DAO:
     return db.records(query)
 
   def getByID(self, ID):
-    return self.select('*', f'{self.__pkName} = {ID}')
+    return db.records(f'SELECT * from {self.__name} WHERE {self.__pkName} = ?', ID)
 
   def deleteByID(self, ID = False):
     if not ID:
