@@ -1,3 +1,5 @@
+from . import db
+
 class Cliente:
     
     def __init__(self, codigo, nome, endereco, cidade, estado, telefone, documento, email):

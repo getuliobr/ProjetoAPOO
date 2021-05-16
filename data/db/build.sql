@@ -48,9 +48,9 @@ CREATE TABLE IF NOT EXISTS Animal(
     Raca int NOT NULL,
     Sexo char(1),
     Cor varchar(10),
-    FOREIGN KEY Dono REFERENCES Cliente(Codigo),
-    FOREIGN KEY Especie REFERENCES Especie(Codigo),
-    FOREIGN KEY Raca REFERENCES Raca(Codigo),
+    FOREIGN KEY (Dono) REFERENCES Cliente(Codigo),
+    FOREIGN KEY (Especie) REFERENCES Especie(Codigo),
+    FOREIGN KEY (Raca) REFERENCES Raca(Codigo),
     CONSTRAINT Animal PRIMARY KEY (Codigo, Dono)
 );
 
@@ -133,6 +133,6 @@ CREATE TABLE IF NOT EXISTS Relatorio(
 CREATE TABLE IF NOT EXISTS Relatorio_Geral(
     IDRelatorio int,
     IDTipo int,
-    FOREIGN KEY IDRelatorio REFERENCES Relatorio(Relatorio)
+    FOREIGN KEY (IDRelatorio) REFERENCES Relatorio(Relatorio)
     CONSTRAINT Relatorio_Geral PRIMARY KEY (IDRelatorio, IDTipo)
 );
