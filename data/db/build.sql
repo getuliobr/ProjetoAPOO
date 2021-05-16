@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS Consulta(
 CREATE TABLE IF NOT EXISTS Consulta_Medicamentos(
     IDConsulta UUID,
     IDProduto UUID,
+    Quanditade integer,
     FOREIGN KEY (IDConsulta) REFERENCES Consulta(IDConsulta),
     FOREIGN KEY (IDProduto) REFERENCES Produto(Codigo),
     CONSTRAINT Consulta_Medicamentos PRIMARY KEY (IDConsulta, IDProduto)
