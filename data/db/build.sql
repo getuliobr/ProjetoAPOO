@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS Raca(
 CREATE TABLE IF NOT EXISTS Animal(
     Codigo UUID PRIMARY KEY,
     Nome varchar(40),
-    Dono integer NOT NULL,
+    Dono UUID NOT NULL,
     DataNascimento date,
     Especie UUID NOT NULL,
     Raca UUID NOT NULL,

@@ -140,11 +140,12 @@ class EspecieDAO(DAO):
 class AnimalDAO(DAO):
     
     def __parseDataToObject(self, data):
-        dono = ClienteDAO.getByID(data[2])
+        data = list(data)
+        dono = self.__ClienteDAO.getByID(data[2])
         data[2] = dono
-        especie = EspecieDAO.getByID(data[4])
+        especie = self.__EspecieDAO.getByID(data[4])
         data[4] = especie
-        raca = RacaDAO.getByID(data[5])
+        raca = self.__RacaDAO.getByID(data[5])
         data[5] = raca
 
         return Animal(
@@ -159,7 +160,7 @@ class AnimalDAO(DAO):
         )
 
     def __parsedList(self, Animal):
-        lista = Animal.read()
+        lista = list(Animal.read())
         clienteID = (lista[2].read())[0]
         lista[2] = clienteID
         especieID = (lista[4].read())[0]
@@ -167,10 +168,13 @@ class AnimalDAO(DAO):
         racaID = (lista[5].read())[0]
         lista[5] = racaID
         
-        return lista
+        return tuple(lista)
 
-    def __init__(self):
+    def __init__(self, ClienteDAO, EspecieDAO, RacaDAO):
         super().__init__('Animal', 'Codigo')
+        self.__ClienteDAO = ClienteDAO
+        self.__EspecieDAO = EspecieDAO
+        self.__RacaDAO = RacaDAO
     
     def add(self, Animal):
         lista  = self.__parsedList(Animal)

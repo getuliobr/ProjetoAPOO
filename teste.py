@@ -1,5 +1,5 @@
-from src.sys.cliente import Cliente
-from src.dao.DAOCliente import ClienteDAO
+from src.sys.cliente import Cliente, Animal, Especie, Raca
+from src.dao.DAOCliente import ClienteDAO, AnimalDAO, EspecieDAO, RacaDAO
 from src.db import db
 from random import randint
 from time import sleep
@@ -7,7 +7,10 @@ import math
 
 db.build()
 
-a = ClienteDAO()
+ClienteDAO = ClienteDAO()
+EspecieDAO = EspecieDAO()
+RacaDAO = RacaDAO()
+AnimalDAO = AnimalDAO(ClienteDAO, EspecieDAO, RacaDAO)
 
 nomes = []
 with open('nomes.txt', 'r') as f:
@@ -26,5 +29,40 @@ for i in range(100):
   estado = 'Parana'
   
   novoCliente = Cliente(nome, endereco, cidade, estado, telefone, cpf, email)
-  a.add(novoCliente)
+  ClienteDAO.add(novoCliente)
 
+clientes = ClienteDAO.getAll()
+
+cachorro = Especie('cachorro')
+gato = Especie('gato')
+
+EspecieDAO.add(cachorro)
+EspecieDAO.add(gato)
+
+branco = Raca('branco')
+preto = Raca('preto')
+cinza = Raca('cinza')
+
+RacaDAO.add(branco)
+RacaDAO.add(preto)
+RacaDAO.add(cinza)
+
+racas = [branco, preto, cinza]
+
+for i in range(100):
+  cliente = clientes[randint(0, len(clientes) - 1)]
+  nome = f'{nomes[randint(0, len(nomes) - 1)]}'
+  nasc = f'{randint(1, 30)}/{randint(1, 12)}/{randint(2015, 2020)}'
+
+  especie = gato
+  if randint(1, 100) > 50:
+    especie = cachorro
+
+  sexo = 'm'
+  if randint(1, 100) > 50:
+    sexo = 'f'
+
+  a = Animal(nome, cliente, nasc, especie, racas[randint(0, 2)], sexo, 'roxo')
+  AnimalDAO.add(a)
+
+print(AnimalDAO.getAll())
