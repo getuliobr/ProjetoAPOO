@@ -1,4 +1,4 @@
-from db import db
+from ..db import db
 
 class DAO:
   def __init__(self, name, primaryKeyName):
