@@ -33,11 +33,12 @@ class Cliente:
     
     def read(self):
         return (self.codigo, self.nome, self.endereco, self.cidade, self.estado, self.telefone, self.documento, self.email)
-    
 
 class Animal:
 
-    def __init__(self, codigo, nome, dono, dataNascimento, especie, raca, sexo, cor):
+    def __init__(self, nome, dono, dataNascimento, especie, raca, sexo, cor, codigo = None):
+        if not codigo:
+            codigo = str(uuid4())
         self.codigo = codigo
         self.nome = nome
         self.dono = dono
@@ -47,9 +48,7 @@ class Animal:
         self.sexo = sexo
         self.cor = cor
 
-    def update(self, codigo= False, nome= False, dono= False, dataNascimento= False, especie= False, raca= False, sexo= False, cor= False):
-        if(codigo):
-            self.codigo = codigo
+    def update(self, nome= False, dono= False, dataNascimento= False, especie= False, raca= False, sexo= False, cor= False):
         if(nome):
             self.nome = nome
         if(dono):
@@ -68,16 +67,15 @@ class Animal:
     def read(self):
         return(self.codigo, self.nome, self.dono, self.dataNascimento, self.especie, self.raca, self.sexo, self.cor)
 
-
 class Especie:
 
-    def __init__(self, codigo, nome):
+    def __init__(self, nome, codigo = None):
+        if not codigo:
+            codigo = str(uuid4())
         self.codigo = codigo
         self.nome = nome
 
-    def update(self, codigo= False, nome= False):
-        if(codigo):
-            self.codigo = codigo
+    def update(self, nome= False):
         if(nome):
             self.nome = nome
     
@@ -86,13 +84,13 @@ class Especie:
 
 class Raca:
 
-    def __init__(self, codigo, descricao):
+    def __init__(self, descricao, codigo = None):
+        if not codigo:
+            codigo = str(uuid4())
         self.codigo = codigo
         self.descricao = descricao
 
-    def update(self, codigo= False, descricao= False):
-        if(codigo):
-            self.codigo = codigo
+    def update(self, descricao= False):
         if(descricao):
             self.descricao = descricao
     
