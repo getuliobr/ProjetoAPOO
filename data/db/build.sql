@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS Veterinario(
-    Codigo INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codigo UUID PRIMARY KEY,
     Nome varchar(40),
     Endereco varchar(60),
     Cidade varchar(20),
@@ -8,17 +8,17 @@ CREATE TABLE IF NOT EXISTS Veterinario(
     FoneCelular varchar(30)
 );
 CREATE TABLE IF NOT EXISTS Atendente(
-    Codigo INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codigo UUID PRIMARY KEY,
     Nome varchar(40)
 );
 
 CREATE TABLE IF NOT EXISTS Administrador(
-    Codigo INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codigo UUID PRIMARY KEY,
     Nome varchar(40)
 );
 
 CREATE TABLE IF NOT EXISTS Cliente(
-    Codigo INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codigo UUID PRIMARY KEY,
     Nome varchar(40),
     Endereco varchar(60),
     Cidade varchar(20),
@@ -29,17 +29,17 @@ CREATE TABLE IF NOT EXISTS Cliente(
 );
 
 CREATE TABLE IF NOT EXISTS Especie(
-    Codigo INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codigo UUID PRIMARY KEY,
     Nome varchar(15)
 );
 
 CREATE TABLE IF NOT EXISTS Raca(
-    Codigo INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codigo UUID PRIMARY KEY,
     Descricao varchar(30)
 );
 
 CREATE TABLE IF NOT EXISTS Animal(
-    Codigo INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codigo UUID PRIMARY KEY,
     Nome varchar(40),
     Dono integer NOT NULL,
     DataNascimento date,
@@ -56,12 +56,12 @@ CREATE TABLE IF NOT EXISTS Pagamento(
     Tipo varchar(25) PRIMARY KEY
 );
 CREATE TABLE IF NOT EXISTS CategoriaDeProduto(
-    Codigo INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codigo UUID PRIMARY KEY,
     Nome varchar(30)
 );
 
 CREATE TABLE IF NOT EXISTS Produto(
-    Codigo INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codigo UUID PRIMARY KEY,
     Descricao varchar(50),
     Fabricante varchar(50),
     Categoria INTEGER,
@@ -70,13 +70,13 @@ CREATE TABLE IF NOT EXISTS Produto(
 );
 
 CREATE TABLE IF NOT EXISTS Servicos(
-    Codigo INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codigo UUID PRIMARY KEY,
     Descricao varchar(60),
     Preco float
 );
 
 CREATE TABLE IF NOT EXISTS Consulta(
-    IDConsulta INTEGER PRIMARY KEY AUTOINCREMENT,
+    IDConsulta UUID PRIMARY KEY,
     DataConsulta date,
     Dono INTEGER NOT NULL,
     Animal INTEGER NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS Consulta_Medicamentos(
 );
 
 CREATE TABLE IF NOT EXISTS CarrinhoDeProdutos(
-    IDCarrinho INTEGER PRIMARY KEY AUTOINCREMENT
+    IDCarrinho UUID PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS Carrinho_Produtos(
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS Carrinho_Produtos(
 );
 
 CREATE TABLE IF NOT EXISTS Venda(
-    IDVenda INTEGER PRIMARY KEY AUTOINCREMENT,
+    IDVenda UUID PRIMARY KEY,
     Cliente INTEGER,
     DataVenda date,
     CarrinhoDeProdutos INTEGER,
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS Venda(
 
 CREATE TABLE IF NOT EXISTS Relatorio(
     Tipo varchar(255),
-    IDRelatorio INTEGER PRIMARY KEY AUTOINCREMENT
+    IDRelatorio UUID PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS Relatorio_Geral(
