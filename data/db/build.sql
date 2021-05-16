@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Especie(
     Nome varchar(15)
 );
 
-CREATE TABLE IF NOT EXISTS Raca(h
+CREATE TABLE IF NOT EXISTS Raca(
     Codigo int PRIMARY KEY,
     Descricao varchar(30)
 );
