@@ -1,13 +1,14 @@
+from uuid import uuid4
 
 class CategoriaDeProduto:
 
-    def __init__(self, codigo, nome):
+    def __init__(self, nome, codigo = None):
+        if not codigo:
+            codigo = str(uuid4())
         self.codigo = codigo
         self.nome = nome
 
-    def update(self, codigo= False, nome= False):
-        if(codigo):
-            self.codigo = codigo
+    def update(self, nome= False):
         if(nome):
             self.nome = nome
     
@@ -16,16 +17,16 @@ class CategoriaDeProduto:
 
 class Produto:
 
-    def __init__(self, codigo, descricao, fabricante, categoria, preco):
+    def __init__(self, descricao, fabricante, categoria, preco, codigo = None):
+        if not codigo:
+            codigo = str(uuid4())
         self.codigo = codigo
         self.descricao = descricao
         self.fabricante = fabricante
         self.categoria = categoria
         self.preco = preco
     
-    def update(self, codigo= False, descricao= False, fabricante= False, categoria= False, preco= False):
-        if(codigo):
-            self.codigo = codigo
+    def update(self, descricao= False, fabricante= False, categoria= False, preco= False):
         if(descricao):
             self.descricao = descricao
         if(fabricante):

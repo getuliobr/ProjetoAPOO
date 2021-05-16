@@ -1,8 +1,12 @@
-from . import produto
+from sys.produto import Produto
+from uuid import uuid4
 
 class Consulta:
 
-    def __init__(self, data, dono, animal, veterinario, pagamento):
+    def __init__(self, data, dono, animal, veterinario, pagamento, codigo = None):
+        if not codigo:
+            codigo = str(uuid4())
+        self.codigo = codigo
         self.data = data
         self.dono = dono 
         self.animal = animal
@@ -30,14 +34,14 @@ class Consulta:
 
 class Servico:
 
-    def __init__(self, codigo, descricao, preco):
+    def __init__(self, descricao, preco, codigo = None):
+        if not codigo:
+            codigo = str(uuid4())
         self.codigo = codigo
         self.descricao = descricao
         self.preco = preco
 
-    def update(self, codigo= False, descricao= False, preco= False):
-        if(codigo):
-            self.codigo = codigo
+    def update(self, descricao= False, preco= False):
         if(descricao):
             self.descricao = descricao
         if(preco):
