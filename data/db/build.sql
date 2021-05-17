@@ -106,6 +106,7 @@ CREATE TABLE IF NOT EXISTS CarrinhoDeProdutos(
 CREATE TABLE IF NOT EXISTS Carrinho_Produtos(
     IDCarrinho UUID,
     IDProduto UUID,
+    Quantidade integer,
     FOREIGN KEY (IDCarrinho) REFERENCES CarrinhoDeProdutos(IDCarrinho),
     FOREIGN KEY (IDProduto)  REFERENCES Produto(Codigo),
     CONSTRAINT Carrinho_Produtos PRIMARY KEY (IDCarrinho, IDProduto)

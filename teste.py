@@ -149,5 +149,5 @@ consulta.addMedicamento(testeDengue)
 ConsultaDAO.add(consulta)
 
 print('teste')
-consulta = ConsultaDAO.getByID('12b4026a-cc8e-4f80-8f09-1a309bb871b3').addMedicamento(testeDengue)
-ConsultaDAO.update(consulta)
+consulta = ConsultaDAO.getByID('12b4026a-cc8e-4f80-8f09-1a309bb871b3')
+print(consulta.read())

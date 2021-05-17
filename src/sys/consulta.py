@@ -51,9 +51,9 @@ class Consulta:
     def addMedicamento(self, Produto, quantidade = 1):
         flag = -1
         i = 0
-        for medicamento in self.medicamentos:
-            print('medicamento', medicamento)
-            if Produto.read()[0] == (medicamento[0].read())[0]:
+        for i in range(len(self.medicamentos)):
+            print(self.medicamentos[i][0].read())
+            if Produto.read()[0] == (self.medicamentos[i][0].read())[0]:
                 flag = i
                 break
             i += 1

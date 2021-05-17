@@ -6,7 +6,7 @@ class PagamentoDAO(DAO):
 
     def __parseDataToObject(self, data):
         return Pagamento(
-            tipo= data[0]
+            data[0]
         )
 
     def __init__(self):
