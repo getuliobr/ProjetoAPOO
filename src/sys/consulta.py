@@ -22,7 +22,7 @@ class Servico:
 
 class Consulta:
 
-    def __init__(self, data, dono, animal, veterinario, pagamento, codigo = None, servicos = None, medicamentos = None):
+    def __init__(self, data, dono, animal, veterinario, pagamento, codigo = None, servicos = None, medicamentos = []):
         if not codigo:
             codigo = str(uuid4())
         self.codigo = codigo
@@ -31,12 +31,8 @@ class Consulta:
         self.animal = animal
         self.veterinario = veterinario
         self.pagamento = pagamento
-        if(servicos):
-            self.servicos = servicos
-        if not medicamentos:
-            self.medicamentos = []
-        else:
-            self.medicamentos = medicamentos
+        self.servicos = servicos
+        self.medicamentos = medicamentos
 
     def update(self, data= False, dono= False, animal= False, veterinario= False, servicos= False, pagamento= False):
         if(data):
@@ -52,29 +48,20 @@ class Consulta:
         if(pagamento):
             self.pagamento = pagamento
 
-    def addMedicamento(self, Produto):
+    def addMedicamento(self, Produto, quantidade = 1):
         flag = -1
         i = 0
         for medicamento in self.medicamentos:
+            print('medicamento', medicamento)
             if Produto.read()[0] == (medicamento[0].read())[0]:
                 flag = i
                 break
             i += 1
 
         if(flag != -1):
-            self.medicamentos[flag][1] += 1
+            self.medicamentos[flag][1] += quantidade
         else:
-            self.medicamentos.append(Produto, 1)
-
-    def removeMedicamento(self, Produto):
-        i = 0
-        for medicamento in self.medicamentos:
-            if Produto.read()[0] == (medicamento[0].read())[0]:
-                if(medicamento[1] > 1):
-                    medicamento[1] -= 1
-                else:
-                    medicamento.pop(i)
-            i += 1
+            self.medicamentos.append([Produto, quantidade])
 
     def read(self):
-        return(self.data, self.dono, self.animal, self.veterinario, self.servicos, self.medicamentos, self.pagamento)
+        return(self.codigo, self.data, self.dono, self.animal, self.veterinario, self.pagamento, self.servicos, self.medicamentos)

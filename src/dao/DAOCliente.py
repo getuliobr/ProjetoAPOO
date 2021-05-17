@@ -207,3 +207,12 @@ class AnimalDAO(DAO):
         for animal in animais:
             parsedAnimal.append(self.__parseDataToObject(animal))
         return parsedAnimal
+
+    def getClientAnimals(self, Cliente):
+        print(Cliente.read())
+        clienteID = Cliente.read()[0]
+        animals = self.select('*', f'Dono = \'{clienteID}\'')
+        animalsParsed = []
+        for animal in animals:
+            animalsParsed.append(self.__parseDataToObject(animal))
+        return animalsParsed
