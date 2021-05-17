@@ -50,6 +50,8 @@ class ServicoDAO(DAO):
             parsedDescricao.append(self.__parseDataToObject(descricao))
         return parsedDescricao
 
+
+#Precisa arrumar o Update e ParsedDataToObject que não está retornando os medicamentos corretamente
 class ConsultaDAO(DAO):
 
     def __parseDataToObject(self, data): ##################
@@ -57,7 +59,7 @@ class ConsultaDAO(DAO):
         cliente = self.__ClienteDAO.getByID(data[2])
         animal = self.__AnimalDAO.getByID(data[3])
         veterinario = self.__VeterinarioDAO.getByID(data[4])
-        pagamento = self.__PagamentoDAO.getByID(data[5])
+        pagamento = self.__PagamentoDAO.getByType(data[5])
         servico = self.__ServicoDAO.getByID(data[6])
         data[2] = cliente
         data[3] = animal
@@ -67,7 +69,11 @@ class ConsultaDAO(DAO):
 
         medicamentos = list(db.records('SELECT IDProduto, Quantidade FROM Consulta_Medicamentos WHERE IDConsulta = ?',data[0]))
 
-
+        for i in range(len(medicamentos)):
+            medicamentos[i] = list(medicamentos[i])
+            produto = self.__ProdutoDAO.getByID(medicamentos[i][0])
+            medicamentos[i][0] = produto
+        
         return Consulta(
             codigo= data[0],
             data= data[1],
@@ -87,7 +93,7 @@ class ConsultaDAO(DAO):
         listaConsulta[3] = animalID
         veterinarioID = (listaConsulta[4].read())[0]
         listaConsulta[4] = veterinarioID
-        pagamentoTipo = (listaConsulta[5].read())[0]
+        pagamentoTipo = listaConsulta[5].read()[0]
         listaConsulta[5] = pagamentoTipo
         servicosID = (listaConsulta[6].read())[0] if listaConsulta[6] else None
         listaConsulta[6] = servicosID
@@ -97,7 +103,7 @@ class ConsultaDAO(DAO):
             produtoID = (listaMedicamentos[i][0].read())[0]
             listaMedicamentos[i][0] = produtoID
             listaMedicamentos[i].insert(0,listaConsulta[0])
-        
+
         lista = [listaConsulta, listaMedicamentos]
         
         return lista
@@ -115,7 +121,6 @@ class ConsultaDAO(DAO):
         lista  = self.__parsedList(Consulta)
         t = db.execute(f'INSERT INTO Consulta VALUES (?,?,?,?,?,?,?)', lista[0])
         for medicamento in lista[1]:
-            print(medicamento)
             db.execute(f'INSERT INTO Consulta_Medicamentos VALUES (?,?,?)', medicamento)
         db.commit()
         return t
@@ -123,16 +128,16 @@ class ConsultaDAO(DAO):
     def update(self, Consulta):
         lista = self.__parsedList(Consulta)
 
-        db.execute(f'UPDATE Consulta SET DataConsulta = {lista[0][1]}, Dono = {lista[0][2]}, Animal = {lista[0][3]}, Veterinario = {lista[0][4]}, Pagamento = {lista[0][5]}, Servicos = {lista[0][6]} WHERE Codigo = {lista[0][0]}')
-        
+        db.execute(f'UPDATE Consulta SET DataConsulta = {lista[0][1]}, Dono = \'{lista[0][2]}\', Animal = \'{lista[0][3]}\', Veterinario = \'{lista[0][4]}\', Pagamento = \'{lista[0][5]}\', Servicos = \'{lista[0][6]}\' WHERE IDConsulta = \'{lista[0][0]}\'')
+
         #Não possui a função remover medicamento do Banco de Dados
         for medicamento in lista[1]:
             consulta_medicamento = []
-            consulta_medicamento = db.record("SELECT * FROM Consulta_Medicamentos WHERE IDConsulta = ?, IDProduto = ?",(medicamento[0],medicamento[1]))
+            consulta_medicamento = db.record(f'SELECT * FROM Consulta_Medicamentos WHERE IDConsulta = \'{medicamento[0]}\' AND IDProduto = \'{medicamento[1]}\'')
             if consulta_medicamento:
-                db.execute(f'UPDATE Consulta_Medicamentos SET Quantidade = {medicamento[2]} WHERE IDConsulta = {medicamento[1]} AND IDProduto = {medicamento[0]}')
+                db.execute(f'UPDATE Consulta_Medicamentos SET Quantidade = {medicamento[2]} WHERE IDConsulta = \'{medicamento[1]}\' AND IDProduto = \'{medicamento[0]}\'')
             else:
-                db.execute(f'INSERT INTO Consulta_Medicamentos (?,?,?)', medicamento)
+                db.execute(f'INSERT INTO Consulta_Medicamentos VALUES (?,?,?)', medicamento)
         
         db.commit()
 

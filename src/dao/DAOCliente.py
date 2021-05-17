@@ -209,7 +209,6 @@ class AnimalDAO(DAO):
         return parsedAnimal
 
     def getClientAnimals(self, Cliente):
-        print(Cliente.read())
         clienteID = Cliente.read()[0]
         animals = self.select('*', f'Dono = \'{clienteID}\'')
         animalsParsed = []
