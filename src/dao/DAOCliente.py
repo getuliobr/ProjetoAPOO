@@ -28,7 +28,7 @@ class ClienteDAO(DAO):
     def update(self, Cliente):
         lista = Cliente.read()
 
-        db.execute(f'UPDATE Cliente SET Nome = {lista[1]}, Endereco = {lista[2]}, Cidade = {lista[3]}, Estado = {lista[4]}, Telefone = {lista[5]}, Documento = {lista[6]}, email = {lista[7]} WHERE Codigo = {lista[0]}')
+        db.execute(f'UPDATE Cliente SET Nome = \'{lista[1]}\', Endereco = \'{lista[2]}\', Cidade = \'{lista[3]}\', Estado = \'{lista[4]}\', Telefone = \'{lista[5]}\', Documento = \'{lista[6]}\', email = \'{lista[7]}\' WHERE Codigo = \'{lista[0]}\'')
         db.commit()
 
     def getByID(self, ID):

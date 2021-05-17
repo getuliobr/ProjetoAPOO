@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS Cliente(
     Endereco varchar(60),
     Cidade varchar(20),
     Estado varchar(15),
-    Telefone INTEGER,
-    Documento INTEGER,
+    Telefone varchar(15),
+    Documento char(15),
     email varchar(50)
 );
 

@@ -13,11 +13,11 @@ class DAO:
   def getByID(self, ID):
     return db.records(f'SELECT * from {self.__name} WHERE {self.__pkName} = ?', ID)[0]
 
-  def deleteByID(self, ID = False):
+  def deleteByID(self, ID = None):
     if not ID:
       return
 
-    db.execute(f'DELETE FROM {self.__name} WHERE {self.__pkName} = ?', ID)
+    db.execute(f'DELETE FROM {self.__name} WHERE {self.__pkName} = \'{ID}\'')
     db.commit()
 
   def getAll(self):
