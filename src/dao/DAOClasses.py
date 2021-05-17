@@ -2,7 +2,7 @@ from src.dao.DAO import DAO
 from src.db import db
 from src.sys.classes import Veterinario, Atendente, Administrador
 
-class veterinarioDAO(DAO):
+class VeterinarioDAO(DAO):
 
     def __parseDataToObject(self, data):
         return Veterinario(
