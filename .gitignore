@@ -131,4 +131,7 @@ dmypy.json
 
 # VSCode Folder
 /.vscode
+
+#Database related
 *.db
+*.db-journal

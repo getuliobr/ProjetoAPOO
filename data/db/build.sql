@@ -55,6 +55,9 @@ CREATE TABLE IF NOT EXISTS Animal(
 CREATE TABLE IF NOT EXISTS Pagamento(
     Tipo varchar(25) PRIMARY KEY
 );
+
+insert into Pagamento values ('Cartao'),('Dinheiro'),('Cheque'),('Pix');
+
 CREATE TABLE IF NOT EXISTS CategoriaDeProduto(
     Codigo UUID PRIMARY KEY,
     Nome varchar(30)
