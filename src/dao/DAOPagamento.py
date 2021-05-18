@@ -18,8 +18,8 @@ class PagamentoDAO(DAO):
         db.commit()
         return t
 
-    def getByType(self, Tipo):
-        pagamento = super().getByID(Tipo)
+    def getByType(self, tipo):
+        pagamento = super().getByID(tipo)
         if not pagamento:
             return None
         return self.__parseDataToObject(pagamento)

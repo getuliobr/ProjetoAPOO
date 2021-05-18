@@ -73,7 +73,6 @@ class Venda:
         self.preco = self.carrinho.read()[2]
     
     def addPagamento(self, pagamento):
-        print(self.formadePagamento, pagamento)
         self.formadePagamento = pagamento
 
     def read(self):

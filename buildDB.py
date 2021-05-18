@@ -1,3 +1,5 @@
-from src.db.db import build
+from src.db import build
 
-build()
+db.build()
+
+db.execute('insert into Pagamento values (\'Cartao\'),(\'Dinheiro\'),(\'Cheque\'),(\'Pix\')')

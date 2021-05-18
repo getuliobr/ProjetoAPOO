@@ -2,18 +2,22 @@
 from time import sleep
 from src.db import db
 import os
+from datetime import datetime
 
 from src.sys.pagamento import Pagamento
 from src.sys.produto import CategoriaDeProduto, Produto
 from src.sys.cliente import Cliente, Animal, Especie, Raca
 from src.sys.consulta import Servico, Consulta
 from src.sys.classes import Atendente, Veterinario
+from src.sys.venda import Venda
 
 from src.dao.DAOProduto import CategoriaDeProdutoDAO, ProdutoDAO
 from src.dao.DAOCliente import ClienteDAO, AnimalDAO, EspecieDAO, RacaDAO
 from src.dao.DAOPagamento import PagamentoDAO
 from src.dao.DAOClasses import VeterinarioDAO, AtendenteDAO, AdministradorDAO
 from src.dao.DAOConsulta import ConsultaDAO, ServicoDAO
+from src.dao.DAOVenda import CarrinhoDAO, VendaDAO
+from src.dao.relatorio import Relatorio
 
 CategoriaDeProdutoDAO = CategoriaDeProdutoDAO()
 ProdutoDAO = ProdutoDAO(CategoriaDeProdutoDAO)
@@ -21,12 +25,14 @@ ClienteDAO = ClienteDAO()
 EspecieDAO = EspecieDAO()
 RacaDAO = RacaDAO()
 AnimalDAO = AnimalDAO(ClienteDAO, EspecieDAO, RacaDAO)
-PagamentoDAO = PagamentoDAO()
 VeterinarioDAO = VeterinarioDAO()
 ServicoDAO = ServicoDAO()
+PagamentoDAO = PagamentoDAO()
 ConsultaDAO = ConsultaDAO(ClienteDAO, AnimalDAO, ProdutoDAO, VeterinarioDAO, PagamentoDAO, ServicoDAO)
 AtendenteDAO = AtendenteDAO()
 AdministradorDAO = AdministradorDAO()
+CarrinhoDAO = CarrinhoDAO(ProdutoDAO)
+VendaDAO = VendaDAO(CarrinhoDAO, PagamentoDAO, ClienteDAO)
 
 class AdministradorFuncional():
   def __init__(self):
@@ -41,6 +47,7 @@ class AdministradorFuncional():
       print('2 - Veterinario')
       print('3 - Categoria Produtos')
       print('4 - Produtos')
+      print('5 - Imprimir')
       print('0 - Sair')
       opcao = int(input('Digite o submenu: '))
       if opcao == 0:
@@ -53,6 +60,20 @@ class AdministradorFuncional():
         self.__menuCategoriaProdutos()
       if opcao == 4:
         self.__menuProdutos()
+      if opcao == 5:
+        self.__imprimir()
+
+  def __imprimir(self):
+    os.system('cls||clear')
+    print('Tipos de relatorio\n0 - Animais\n1 - Produtos\n2 - Sair')
+    tipos = ['Animais', 'Produtos']
+    tipo = int(input('Escolha o tipo: '))
+    if tipo == 2:
+      return
+    escolhido = tipos[tipo]
+    os.system('cls||clear')
+    Relatorio(escolhido).printRelatorio()
+    input('Aperte enter para continuar ...')
 
   def __menuProdutos(self):
     os.system('cls||clear')
@@ -312,6 +333,48 @@ class AtendenteFuncional:
         self.__menuEspecie()
       if opcao == 4:
         self.__menuAnimal()
+      if opcao == 5:
+        self.__iniciarVenda()
+
+  def __escolherProdutos(self, codigo = None):
+    produtos = ProdutoDAO.getAll()
+    i = 0
+    for produto in produtos:
+      print(i, '-', produto.read()[1])
+      i += 1
+    if codigo == None:
+      codigo = int(input('Qual codigo do produto? '))
+    os.system('cls||clear')
+    if codigo < 0:
+      return
+    if codigo >= 0 or codigo < len(produtos):
+      return produtos[codigo]
+    return None
+
+  def __iniciarVenda(self):
+    option = input('Voce deseja iniciar uma venda? (S)im ou (N)ao\n')
+    if option.upper() == 'N':
+      return
+    cliente = self.__escolherCliente()
+    data = '{:%d/%m/%Y}'.format(datetime.now())
+    print('Qual a forma de pagamento?')
+    print('0 - Cartao')
+    print('1 - Dinheiro')
+    print('2 - Cheque')
+    print('3 - Pix')
+    pagamentos = ['Cartao', 'Dinheiro', 'Cheque', 'Pix']
+    pagamento = pagamentos[int(input('Escolha uma opcao: '))]
+    pagamento = PagamentoDAO.getByType(pagamento)
+    v = Venda(cliente=cliente, data=data, pagamento=pagamento)
+    adicionarProduto = True
+    while adicionarProduto:
+      os.system('cls||clear')
+      print('Digite -1 para sair')
+      produto = self.__escolherProdutos()
+      if produto == None:
+        break
+      v.addProduto(produto)
+    VendaDAO.add(v)
 
   def __menuAnimal(self):
     print('1 - Criar')
@@ -334,10 +397,10 @@ class AtendenteFuncional:
     animal = Animal(nome, dono, dataNascimento, especie, raca, sexo, cor)
     AnimalDAO.add(animal)
 
-  def __lerAnimal(self): ### erro ler animal
+  def __lerAnimal(self):
     animal = self.__escolherAnimal()
-    nome, dono, dataNascimento, especie, raca, sexo, cor = animal.read()
-    print(f'Animal com nome {nome} do dono: {dono.read()[1]}')
+    codigo, nome, dono, dataNascimento, especie, raca, sexo, cor = animal.read()
+    print(f'Animal do codigo {codigo} tem o nome {nome}, e é do dono: {dono.read()[1]}')
     print(f'Nascido em {dataNascimento}')
     print(f'Da especie {especie.read()[1]}')
     print(f'Da raca {raca.read()[1]}')
@@ -346,7 +409,7 @@ class AtendenteFuncional:
     input('Aperte enter para continuar ...')
 
   def __escolherAnimal(self):
-    animais = ClienteDAO.getAll()
+    animais = AnimalDAO.getAll()
     i = 0
     for animal in animais:
       nome = animal.read()[1]

@@ -25,7 +25,7 @@ class Relatorio:
         if self.tipo == 'Animais':
             lista = self.__AnimalDAO.getAll()
             print(
-                "{:40} {:15} {:30} {:20} {:10} {:10} {:10} {:10}"
+                "{:40} {:15} {:30} {:20} {:10} {:16} {:10} {:10}"
                 .format('Codigo', 'Nome', 'Dono', 'Data de Nascimento', 'Especie', 'Raça', 'Sexo', 'Cor')
             )
             for animais in lista:
