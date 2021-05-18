@@ -1,7 +1,7 @@
 class Pagamento:
 
     def __init__(self, tipo):
-        self.tipo = tipo
+        self.__tipo = tipo
 
     def read(self):
-        return (self.tipo,)
+        return (self.__tipo,)

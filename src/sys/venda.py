@@ -13,37 +13,37 @@ class Carrinho:
         if not preco:
             preco = 0.0
 
-        self.codigo = codigo
-        self.lista = lista
-        self.preco = preco
+        self.__codigo = codigo
+        self.__lista = lista
+        self.__preco = preco
 
     def __haveProduto(self,produto):
-        for i in range(len(self.lista)):
-            if (self.lista[i][0].read())[0] == produto.read()[0]:
+        for i in range(len(self.__lista)):
+            if (self.__lista[i][0].read())[0] == produto.read()[0]:
                 return i
         return -1
 
     def addProduto(self, produto):
         temProduto = self.__haveProduto(produto)
         if temProduto > -1:
-            self.lista[temProduto][1] += 1
-            self.preco += produto.read()[4]
+            self.__lista[temProduto][1] += 1
+            self.__preco += produto.read()[4]
         else:
-            self.lista.append([produto, 1])
-            self.preco += produto.read()[4]
+            self.__lista.append([produto, 1])
+            self.__preco += produto.read()[4]
     
     def removeProduto(self, produto):
         temProduto = self.__haveProduto(produto)
         if temProduto > -1:
-            if(self.lista[temProduto][1] > 1):
-                self.lista[temProduto][1] -= 1
+            if(self.__lista[temProduto][1] > 1):
+                self.__lista[temProduto][1] -= 1
             else:
-                self.lista.pop(temProduto)
-            self.preco -= produto.read()[4]
+                self.__lista.pop(temProduto)
+            self.__preco -= produto.read()[4]
     
 
     def read(self):
-        return (self.codigo, self.lista, self.preco)
+        return (self.__codigo, self.__lista, self.__preco)
 
 class Venda:
 
@@ -56,27 +56,27 @@ class Venda:
             carrinho = Carrinho()
         if not preco:
             preco = 0.0
-        self.codigo = codigo
-        self.cliente = cliente
-        self.data = data
-        self.carrinho = carrinho
-        self.preco = preco
-        self.formadePagamento =  pagamento
+        self.__codigo = codigo
+        self.__cliente = cliente
+        self.__data = data
+        self.__carrinho = carrinho
+        self.__preco = preco
+        self.__formadePagamento =  pagamento
 
     def addProduto(self, Produto):
-        self.carrinho.addProduto(Produto)
-        self.preco = self.carrinho.read()[2]
+        self.__carrinho.addProduto(Produto)
+        self.__preco = self.carrinho.read()[2]
 
 
     def removeProduto(self, Produto):
-        self.carrinho.removeProduto(Produto)
-        self.preco = self.carrinho.read()[2]
+        self.__carrinho.removeProduto(Produto)
+        self.__preco = self.carrinho.read()[2]
     
     def addPagamento(self, pagamento):
-        self.formadePagamento = pagamento
+        self.__formadePagamento = pagamento
 
     def read(self):
-        return(self.codigo, self.cliente, self.data, self.carrinho, self.formadePagamento, self.preco)
+        return(self.__codigo, self.__cliente, self.__data, self.__carrinho, self.__formadePagamento, self.__preco)
 
 
 
